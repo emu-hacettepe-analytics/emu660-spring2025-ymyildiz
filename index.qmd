@@ -2,7 +2,7 @@
 title: "Welcome to My Analytics Lab"
 ---
 
-Hello!! My name is xxx xxxx.
+Hello!! This is Yiğit from EMU660 Spring Course.
 
 This is my personal webpage.
 

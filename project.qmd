@@ -2,7 +2,7 @@
 title: "Project X"
 ---
 
-Welcome to my/our project page.
+Welcome to my project page.
 
 Keep an eye on this space to stay updated with my project activities.
 

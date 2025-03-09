@@ -3,38 +3,39 @@ title: "About Me"
 sidebar: false 
 ---
 
-![](assets/images/vesikalik.jpeg){fig-align="center"}
+![](images/1-2.jpg){fig-align="center" width="250"}
 
 # Education
 
--   B.S., ................................., ....................................University, Turkey, 20xx - 20xx.
--   M.S., Industrial Engineering, Hacettepe University, Turkey, 20xx - ongoing.
--   Ph.D.., Industrial Engineering, Hacettepe University, Turkey, 20xx - ongoing.
+-   M.S., Industrial Engineering, Hacettepe University, Turkey, 2024-
+-   B.S., Industrial Engineering, Ihsan Dogramaci Bilkent University, Turkey, 2017 - 2022
 
 # Work Experience
 
-## Employements
+1.  ASELSAN A.S, Project Engineer, Sep 2022- (full-time)
 
-1.  Firm xxx, position xx, year xxx
+2.  ARCELIK A.S, Project Assistant, Jan-Apr 2022 (part-time)
 
-2.  Firm yyy, position yyy, year yyy
+3.  Mercedes-Benz Turk A.S, PEP (Professional Experience Program), Jul-Dec 2021 (part-time)
 
-## Internships
+4.  Bosch Thermotechnic, Logistics Intern, Jun 2021 (internship)
 
-1.  Firm aaa, position xx, year xxx
+5.  ATM Beyaz Esya Parçalari San. ve Tic. Ltd., Operator, Jun-Aug 2020 (full-time)
 
-2.  Firm bbb, position yyy, year yyy
+6.  Ferhanyildiz Rent a Car, Concierge-Driver, Jun-Aug 2019 (full-time)
 
 # Projects
 
-1.  TUBİTAK 1001..........................
+1.  Decision Support System for Configuration Management of FNSS (Senior Year Project)
 
 # Publications
 
-1.  Dasdemir, E., Batta, R., Koksalan, M., Tezcaner Ozturk, D. (2022) “UAV Routing for Reconnaissance Mission: A Multi-Objective Orienteering Problem with Time-Dependent Prizes and Multiple Connections”, Computers & Operations Research, 145: 105882.
+1.  Progressing...
 
 # Competencies
 
-R, Quarto, Git, Python
+R, Quarto, Git, Python, Xpress, Primavera P6
 
 # Hobbies
+
+Working out, watching-analysing movies, travelling

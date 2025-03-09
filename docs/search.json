@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Welcome to My Analytics Lab",
     "section": "",
-    "text": "Hello!! My name is xxx xxxx.\nThis is my personal webpage.\nPlease stay tuned to follow my works on data analytics, blog posts, and more.\n\n\n\n Back to top"
+    "text": "Hello!! This is Yiğit from EMU660 Spring Course.\nThis is my personal webpage.\nPlease stay tuned to follow my works on data analytics, blog posts, and more.\n\n\n\n Back to top"
   },
   {
     "objectID": "project.html",
@@ -74,7 +74,7 @@
     "href": "assignments.html",
     "title": "My Assignments",
     "section": "",
-    "text": "On this page, I showcase the assignment I conducted for the [term and year, e.g. Spring 2024] EMU660 Decision Making with Analytics course.\nPlease use left menu to navigate through my assignments.\n\n\n\n Back to top",
+    "text": "On this page, I showcase the assignment I conducted for the [term and year, e.g. Spring 2024-2025] EMU660 Decision Making with Analytics course.\nPlease use left menu to navigate through my assignments.\n\n\n\n Back to top",
     "crumbs": [
       "My Assignments"
     ]
@@ -84,7 +84,7 @@
     "href": "about.html#employements",
     "title": "About Me",
     "section": "Employements",
-    "text": "Employements\n\nFirm xxx, position xx, year xxx\nFirm yyy, position yyy, year yyy"
+    "text": "Employements\n\nASELSAN A.S, Project Engineer, Sep 2022- (full-time)\nARCELIK A.S, Project Assistant, Jan-Apr 2022 (part-time)\nMercedes-Benz Turk A.S, PEP (Professional Experience Program), Jul-Dec 2021 (part-time)\nBosch Thermotechnic, Logistics Intern, Jun 2021 (internship)\nATM Beyaz Esya Parçalari San. ve Tic. Ltd., Operator, Jun-Aug 2020 (full-time)\nFerhanyildiz Rent a Car, Concierge-Driver, Jun-Aug 2019 (full-time)"
   },
   {
     "objectID": "about.html#internships",
@@ -126,5 +126,12 @@
     "crumbs": [
       "Assignment 2"
     ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About Me",
+    "section": "",
+    "text": "Education\n\nM.S., Industrial Engineering, Hacettepe University, Turkey, 2024-\nB.S., Industrial Engineering, Ihsan Dogramaci Bilkent University, Turkey, 2017 - 2022\n\n\n\nWork Experience\n\nASELSAN A.S, Project Engineer, Sep 2022- (full-time)\nARCELIK A.S, Project Assistant, Jan-Apr 2022 (part-time)\nMercedes-Benz Turk A.S, PEP (Professional Experience Program), Jul-Dec 2021 (part-time)\nBosch Thermotechnic, Logistics Intern, Jun 2021 (internship)\nATM Beyaz Esya Parçalari San. ve Tic. Ltd., Operator, Jun-Aug 2020 (full-time)\nFerhanyildiz Rent a Car, Concierge-Driver, Jun-Aug 2019 (full-time)\n\n\n\nProjects\n\nDecision Support System for Configuration Management of FNSS (Senior Year Project)\n\n\n\nPublications\n\nProgressing…\n\n\n\nCompetencies\nR, Quarto, Git, Python, Xpress, Primavera P6\n\n\nHobbies\nWorking out, watching-analysing movies, travelling\n\n\n\n\n Back to top"
   }
 ]
