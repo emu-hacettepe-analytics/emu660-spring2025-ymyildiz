@@ -2,14 +2,110 @@
 title: "Assignment 1"
 ---
 
-# Assignment 1
-
-```{r}
-1 + 1
-```
-
-My first assignment has two parts.
+This page consists of the final requirements of Assignment 1. There are three sub-parts of the 3rd task of the assignment, where first two tasks mainly focus on customization of the webpage and publishing the CV.
 
 ## (a)
+#### A Brief Summary of the Talk Called "Veri Bilimi ve Endüstri Mühendisliği Üzerine Sohbetler - Cem Vardar & Erdi Dasdemir"
+The talk is mainly about data science and its relation to industrial engineering according to Mr. Cem Vardar. The talk starts with a brief **Introduction** where he introduces himself. Mr. Vardar has been an industrial engineer for more than 20 years. After his PhD at Arizona State University, he worked in various tech companies as data scientist and analyst in the USA. As a second section of the talk, he mentioned the concept of **Engineering and Problem Solving**. According to Mr. Vardar, an engineer solves problem withing the systems by using science and mathematical applications. Here, industrial engineers play a role of problem solver not just of any system but of complex systems. He also emphasizes the importance of initiating the solution to such systems' problems with a basic approach even though a complex solution will be needed in the end, which is very similar to idea of evolution in his opinion. In this part he states that he supports the phrase "If it works, don't touch it!" as a response to a student's question. Later, in **Data Science and Industrial Engineering** part, he gathers the approaches of data science into sub-groups. These groups mainly use data science as a tool to solve problems, which is a huge plus for a company to analyze and learn. In the fourth section, **Carvana and Data Analytics/Science**, he explains what the departments related to data do and which tools they are using while doing that in the company named Carvana where he used to work and witnessed its growth thanks to these departments. After that, he mentions the **Qualifications of Data Scientists** in the business sector and what to do to improve the skills. He basically divides skill into two headings: soft skills and technical skills. Then, he sincerely tells his **Recommendations** for the ones who are willing to be a successful data scientist as an industrial engineer. In the end, he mentions **Reading, Listening and Watching List** including some videos and books related to the speech he gave.
 
-## (b)
+
+
+## (b) 
+#### Exploring Statistical Summaries with Custom Functions and Iteration Methods
+```{r}
+data(mtcars)
+mtcars
+```
+
+Here, we called "mtcars" dataset. \n
+Then, the function returning a named list containing the mean, median, variance, IQR, minimum, and maximum of the input would be as follows:
+
+```{r}
+compute_stats <- function(x){
+  if (!is.numeric(x)){
+    stop("Input is not numeric vector.") #We make sure that the function takes numeric vector as input.
+  }
+  
+  statistics_of_data <- list(
+  mean =  mean(x),
+  median =  median(x),
+  variance = var(x),
+  IQR = IQR(x),
+  min = min(x),
+  max =  max(x)
+  )
+  
+  statistics_of_data
+}
+```
+
+Now, let us apply the function using a for loop:
+
+```{r}
+for (column_name in names(mtcars)){
+  if(is.numeric(mtcars[[column_name]])){
+    computed_statistics <- compute_stats(mtcars[[column_name]])
+    cat("\nStatistics for Column:", column_name, "\n")
+    print(computed_statistics)
+    cat("\n---------------------\n")
+  }
+}
+```
+
+As an alternative approach, we can benefit from sapply and apply commands instead of a for loop:
+
+```{r}
+numeric_stats <- sapply(mtcars[sapply(mtcars, is.numeric)], compute_stats)
+numeric_stats
+
+matrix_of_mtcars <- as.matrix(mtcars[sapply(mtcars, is.numeric)])
+matrix_of_statistics <- apply(matrix_of_mtcars, MARGIN = 2, compute_stats)
+matrix_of_statistics
+```
+
+## (c)
+#### Handling with a Dataset "na_example" 
+
+This time, we will be using dataset "na_example" which is displayed below:
+
+```{r}
+library(dslabs)
+data(na_example)
+na_example
+```
+
+This time, we will be using dataset "na_example" which is displayed above. There are some interpretation of the dataset in the following section:
+
+```{r}
+sum(is.na(na_example)) # Count of NA values found within the dataset
+which(is.na(na_example)) # Index position of NA values in the dataset
+
+mean_of_naexample <- mean(na_example, na.rm = TRUE) # Mean of the dataset
+std_dev_of_naexample <- sqrt(var(na_example, na.rm = TRUE)) # Standard deviation of the dataset
+
+mean_of_naexample
+std_dev_of_naexample
+```
+
+Now, let us remove the NA's to find the median of the non-missing values so that we can create the Version 1 of the dataset where all NA values are replaced with the median of the non-missing values.
+
+```{r}
+nonmissing_naexample <- na_example[!is.na(na_example)]
+nonmissing_naexample
+median_of_nonmissing <- median(nonmissing_naexample)
+
+na_example_Version1 <- ifelse(is.na(na_example), median_of_nonmissing, na_example)
+na_example_Version1
+```
+
+We can also come up with Version 2 where all NA values are replaced with the a randomly selected non-missing value by the following operation:
+
+```{r}
+set.seed(123)  # Let us set seed for reproducibility.
+na_example_Version2 <- na_example
+na_example_Version2[is.na(na_example_Version2)] <- sample(nonmissing_naexample, sum(is.na(na_example_Version2)), replace = TRUE)
+
+na_example_Version2
+```
+
+

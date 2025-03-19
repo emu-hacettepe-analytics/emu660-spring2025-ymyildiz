@@ -39,3 +39,5 @@ R, Quarto, Git, Python, Xpress, Primavera P6
 # Hobbies
 
 Working out, watching-analysing movies, travelling
+
+[CV](CV_Yigit_Muzaffer_Yildiz.pdf){.btn .btn-primary}
