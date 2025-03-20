@@ -5,7 +5,7 @@ title: "Welcome to My Analytics Lab"
 <img src="welcome_aboard.gif" width="300px" />
 
 
-Hello!! This is Yiğit from EMU660 Spring Course.
+Hello!! This is Yiğit from EMU660 2024-2025 Spring Course.
 
 This is my personal webpage.
 

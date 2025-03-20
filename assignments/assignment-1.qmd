@@ -4,20 +4,22 @@ title: "Assignment 1"
 
 This page consists of the final requirements of Assignment 1. There are three sub-parts of the 3rd task of the assignment, where first two tasks mainly focus on customization of the webpage and publishing the CV.
 
-## (a)
-#### A Brief Summary of the Talk Called "Veri Bilimi ve Endüstri Mühendisliği Üzerine Sohbetler - Cem Vardar & Erdi Dasdemir"
-The talk is mainly about data science and its relation to industrial engineering according to Mr. Cem Vardar. The talk starts with a brief **Introduction** where he introduces himself. Mr. Vardar has been an industrial engineer for more than 20 years. After his PhD at Arizona State University, he worked in various tech companies as data scientist and analyst in the USA. As a second section of the talk, he mentioned the concept of **Engineering and Problem Solving**. According to Mr. Vardar, an engineer solves problem withing the systems by using science and mathematical applications. Here, industrial engineers play a role of problem solver not just of any system but of complex systems. He also emphasizes the importance of initiating the solution to such systems' problems with a basic approach even though a complex solution will be needed in the end, which is very similar to idea of evolution in his opinion. In this part he states that he supports the phrase "If it works, don't touch it!" as a response to a student's question. Later, in **Data Science and Industrial Engineering** part, he gathers the approaches of data science into sub-groups. These groups mainly use data science as a tool to solve problems, which is a huge plus for a company to analyze and learn. In the fourth section, **Carvana and Data Analytics/Science**, he explains what the departments related to data do and which tools they are using while doing that in the company named Carvana where he used to work and witnessed its growth thanks to these departments. After that, he mentions the **Qualifications of Data Scientists** in the business sector and what to do to improve the skills. He basically divides skill into two headings: soft skills and technical skills. Then, he sincerely tells his **Recommendations** for the ones who are willing to be a successful data scientist as an industrial engineer. In the end, he mentions **Reading, Listening and Watching List** including some videos and books related to the speech he gave.
+## (a) A Brief Summary of the Talk Called "Veri Bilimi ve Endüstri Mühendisliği Üzerine Sohbetler - Cem Vardar & Erdi Dasdemir"
+
+The talk is mainly about data science and its relation to industrial engineering according to Mr. Cem Vardar. The talk starts with a brief **Introduction** where he introduces himself. Mr. Vardar has been an industrial engineer for more than 20 years. After his PhD at Arizona State University, he worked in various tech companies as data scientist and analyst in the USA. \
+As a second section of the talk, he mentioned the concept of **Engineering and Problem Solving**. According to Mr. Vardar, an engineer solves problem withing the systems by using science and mathematical applications. Here, industrial engineers play a role of problem solver not just of any system but of complex systems. He also emphasizes the importance of initiating the solution to such systems' problems with a basic approach even though a complex solution will be needed in the end, which is very similar to idea of evolution in his opinion. In this part he states that he supports the phrase "If it works, don't touch it!" as a response to a student's question. Later, in **Data Science and Industrial Engineering** part, he gathers the approaches of data science into sub-groups. These groups mainly use data science as a tool to solve problems, which is a huge plus for a company to analyze and learn. \
+In the fourth section, **Carvana and Data Analytics/Science**, he explains what the departments related to data do and which tools they are using while doing that in the company named Carvana where he used to work and witnessed its growth thanks to these departments. After that, he mentions the **Qualifications of Data Scientists** in the business sector and what to do to improve the skills. He basically divides skill into two headings: soft skills and technical skills. Then, he sincerely tells his **Recommendations** for the ones who are willing to be a successful data scientist as an industrial engineer. In the end, he mentions **Reading, Listening and Watching List** including some videos and books related to the speech he gave.
 
 
 
-## (b) 
-#### Exploring Statistical Summaries with Custom Functions and Iteration Methods
+## (b) Exploring Statistical Summaries with Custom Functions and Iteration Methods 
+
 ```{r}
 data(mtcars)
 mtcars
 ```
 
-Here, we called "mtcars" dataset. \n
+Here, we called "mtcars" dataset. \
 Then, the function returning a named list containing the mean, median, variance, IQR, minimum, and maximum of the input would be as follows:
 
 ```{r}
@@ -63,8 +65,7 @@ matrix_of_statistics <- apply(matrix_of_mtcars, MARGIN = 2, compute_stats)
 matrix_of_statistics
 ```
 
-## (c)
-#### Handling with a Dataset "na_example" 
+## (c) Handling the Dataset "na_example" 
 
 This time, we will be using dataset "na_example" which is displayed below:
 
@@ -108,4 +109,17 @@ na_example_Version2[is.na(na_example_Version2)] <- sample(nonmissing_naexample, 
 na_example_Version2
 ```
 
+let us compute the mean and standard deviation of both modified datasets (Version 1 and 2) and compare to the ones of original data.
+```{r}
 
+cat("mean of Versiyon 1:", mean(na_example_Version1), "\n")
+cat("mean of Versiyon 2:", mean(na_example_Version2), "\n")
+
+cat("std dev of Version 1:", sqrt(var(na_example_Version1)), "\n")
+cat("std dev of Version 2:", sqrt(var(na_example_Version2)), "\n")
+
+mean_of_naexample
+std_dev_of_naexample
+```
+We can clearly see that the mean values of the modified datasets are less than the original one while on the other hand, standard deviation of the modified datasets are greater than the original one. \
+Version 1 also has greater mean and less standard deviation than Version 1 characteristics. Here, we can conclude that replacing NA values by the median of dataset keeps the data more stable than replacing by a random value.
