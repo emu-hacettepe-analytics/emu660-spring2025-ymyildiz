@@ -1,5 +1,5 @@
 ---
-title: "Project X"
+title: "Inflation of Food and Its Affect on Different Expenditure Groups in Turkey"
 ---
 
 Welcome to my project page.
@@ -10,23 +10,31 @@ Keep an eye on this space to stay updated with my project activities.
 
 # 1. Project Overview and Scope
 
-xxxxxx
+Every country has an inflation which might be either positive or negative. It is stated that positive inflation points a country's economical status in terms of people's power to buy and maintain their lives. For the last few years, Turkey is one of the countries which suffer from high inflation. Moreover, the inflation has been increasing day by day. The inflation word consists of many sub categories some of which are food, cloth, education, and transportation consumer price index (CPI). This project mainly focuses on the CPI of food and its affect on various groups of people with different total expenditure levels. Having done the analysis and comments, "Consumer price index (2003=100) according to main and sub-main groups, 2005-2025" and "Distribution of household consumption expenditure by quintiles ordered by expenditure, Türkiye, 2002-2023" data are driven from the website of TUIK, which is short for Turkey Statistics Institute.
+
 
 # 2. Data
 
-xxxxxx
+```{r}
+#install.packages("readxl")
+#library(readxl)
+#consumer_price_index_data <- read_xlsx(path = "consumer_price_index_according_to_groups.xlsx")
+#comparison_of_consumption_types <- read_xlsx(path = #"comparison_of_consumption_types_according_to_expenditure.xlsx")
+```
 
 ## 2.1 Data Source
 
-xxxxxx
+The data used for the analysis is driven from TUIK website. 
 
 ## 2.2 General Information About Data
 
-xxxxxx
+The data named "Distribution of household consumption expenditure by quintiles ordered by expenditure, Türkiye, 2002-2023" consists of the distribution of consumption expenditure types of different expenditure groups. There are 5 groups in the columns named as "First quantile", "Second quantile", "Third quantile", "Fourth quantile", and "Last quantile". Each represents 20% of the people in an ascending order of expenditure amount. Namely, First quantile represents the %20 of the people who spend the least while Last quantile represents the people who spend the most. There are different expenditure types for the years in the rows. However there is not any data from the years 2020 and 2021 even though the data named by 2002-2023. Besides, there are two types of expenditure categorization for 2022 with a slight difference of splitting one type into to types. This update of categorization continues on 2023 as well. Consequently, there are 12 different expenditure types for the years from 2002 to 2022, excluding 2020 and 2021,  while there are 14 for years 2022 and 2023. \
+
+Another data used is named as "Consumer price index (2003=100) according to main and sub-main groups, 2005-2025". This data shows the index value of 288 different main and sub groups of expenditure according to each month of the years from 2005 to 2025. Year and month information is on the rows while the group names form the columns.  Only the columns directly related to food is considered as the scope of this project.
 
 ## 2.3 Reason of Choice
 
-xxxxxx
+The inflation of a country tells a lot about economical status of it. It tells so many things that the food aspect of it might be underestimated. Nevertheless, to reach food has been one of the major concerns of a mankind. Over the decades, this concern has become more crucial for Turkish people, especially having low level of income and belong to the first and second quantile of expenditure level groups. The data chosen for this project helps us to understand which group of people spend what percentage of their money to food and how this rate changes according to the inflation and consumer index of food. The outcome of the analysis might shed light on the facts like a sign of socio-economial differences within the Turkish people. 
 
 ## 2.4 Preprocessing
 

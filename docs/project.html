@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Project X – Yigit’s Analytics Lab</title>
+<title>Inflation of Food and Its Affect on Different Expenditure Groups – Yigit’s Analytics Lab</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -164,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Project X</h1>
+<h1 class="title">Inflation of Food and Its Affect on Different Expenditure Groups</h1>
 </div>
 
 
@@ -186,22 +220,29 @@ ul.task-list li input[type="checkbox"] {
 <p>(The titles below are provided as examples; please feel free to adjust them as necessary.)</p>
 <section id="project-overview-and-scope" class="level1">
 <h1>1. Project Overview and Scope</h1>
-<p>xxxxxx</p>
+<p>Every country has an inflation which might be either positive or negative. It is stated that positive inflation points a country’s economical status in terms of people’s power to buy and maintain their lives. For the last few years, Turkey is one of the countries which suffer from high inflation. Moreover, the inflation has been increasing day by day. The inflation word consists of many sub categories some of which are food, cloth, education, and transportation consumer price index (CPI). This project mainly focuses on the CPI of food and its affect on various groups of people with different total expenditure levels. Having done the analysis and comments, “Consumer price index (2003=100) according to main and sub-main groups, 2005-2025” and “Distribution of household consumption expenditure by quintiles ordered by expenditure, Türkiye, 2002-2023” data are driven from the website of TUIK, which is short for Turkey Statistics Institute.</p>
 </section>
 <section id="data" class="level1">
 <h1>2. Data</h1>
-<p>xxxxxx</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("readxl")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#library(readxl)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#consumer_price_index_data &lt;- read_xlsx(path = "consumer_price_index_according_to_groups.xlsx")</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#comparison_of_consumption_types &lt;- read_xlsx(path = #"comparison_of_consumption_types_according_to_expenditure.xlsx")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <section id="data-source" class="level2">
 <h2 class="anchored" data-anchor-id="data-source">2.1 Data Source</h2>
-<p>xxxxxx</p>
+<p>The data used for the analysis is driven from TUIK website.</p>
 </section>
 <section id="general-information-about-data" class="level2">
 <h2 class="anchored" data-anchor-id="general-information-about-data">2.2 General Information About Data</h2>
-<p>xxxxxx</p>
+<p>The data named “Distribution of household consumption expenditure by quintiles ordered by expenditure, Türkiye, 2002-2023” consists of the distribution of consumption expenditure types of different expenditure groups. There are 5 groups in the columns named as “First quantile”, “Second quantile”, “Third quantile”, “Fourth quantile”, and “Last quantile”. Each represents 20% of the people in an ascending order of expenditure amount. Namely, First quantile represents the %20 of the people who spend the least while Last quantile represents the people who spend the most. There are different expenditure types for the years in the rows. However there is not any data from the years 2020 and 2021 even though the data named by 2002-2023. Besides, there are two types of expenditure categorization for 2022 with a slight difference of splitting one type into to types. This update of categorization continues on 2023 as well. Consequently, there are 12 different expenditure types for the years from 2002 to 2022, excluding 2020 and 2021, while there are 14 for years 2022 and 2023.<br>
+</p>
+<p>Another data used is named as “Consumer price index (2003=100) according to main and sub-main groups, 2005-2025”. This data shows the index value of 288 different main and sub groups of expenditure according to each month of the years from 2005 to 2025. Year and month information is on the rows while the group names form the columns. Only the columns directly related to food is considered as the scope of this project.</p>
 </section>
 <section id="reason-of-choice" class="level2">
 <h2 class="anchored" data-anchor-id="reason-of-choice">2.3 Reason of Choice</h2>
-<p>xxxxxx</p>
+<p>The inflation of a country tells a lot about economical status of it. It tells so many things that the food aspect of it might be underestimated. Nevertheless, to reach food has been one of the major concerns of a mankind. Over the decades, this concern has become more crucial for Turkish people, especially having low level of income and belong to the first and second quantile of expenditure level groups. The data chosen for this project helps us to understand which group of people spend what percentage of their money to food and how this rate changes according to the inflation and consumer index of food. The outcome of the analysis might shed light on the facts like a sign of socio-economial differences within the Turkish people.</p>
 </section>
 <section id="preprocessing" class="level2">
 <h2 class="anchored" data-anchor-id="preprocessing">2.4 Preprocessing</h2>
