@@ -1,5 +1,5 @@
 ---
-title:  <span style="color:purple;">INFLATION OF FOOD AND ITS EFFECT ON DIFFERENT EXPENDITURE GROUPS IN TURKEY</span> 
+title:  <span style="color:brown;">INFLATION OF FOOD AND ITS EFFECT ON DIFFERENT EXPENDITURE GROUPS IN TURKEY</span> 
 format:
   html:
     code-fold: true
@@ -64,11 +64,11 @@ summary_of_number_of_row_and_columns
 
 - For COCT data;\
 There is year and expenditure type information for each row. However, there will be another column mutated including year and expenditure type at the same time. There can be unique information column for each row thanks to this operation. The rows with total consumption expenditure information is planned to be removed since they only have 100%.\
-[Downloadable COCT Data in .RData version](https://github.com/emu-hacettepe-analytics/emu660-spring2025-ymyildiz)
+[Downloadable COCT Data in .RData version](https://github.com/emu-hacettepe-analytics/emu660-spring2025-ymyildiz/raw/refs/heads/main/comparison_of_consumption_types.RData)
 
 - For CPI data;\
 There are too many columns as groups of expenditure some of which are not the topic of this project. These columns will be removed from the data. On the row side, there is year and month information. An additional row for each year will be mutated as the average value of the months of a year so that a relation with CPI data can be created. The change in the CPI of food will also be evaluated monthly for the years. Therefore, the month column and its relative rows will be kept for further analysis.\
-[Downloadable CPI Data in .RData version](https://github.com/emu-hacettepe-analytics/emu660-spring2025-ymyildiz)
+[Downloadable CPI Data in .RData version](https://github.com/emu-hacettepe-analytics/emu660-spring2025-ymyildiz/raw/refs/heads/main/consumer_price_index_data.RData)
 
 ## <span style="color:darkgreen;">3. Analysis</span>
 
