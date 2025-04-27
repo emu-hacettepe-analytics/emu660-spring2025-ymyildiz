@@ -46,8 +46,8 @@ format:
     toc: true
     toc-location: left
     theme: 
-      light: simplex 
-      dark: cyborg
+      light: lumen 
+      dark: superhero
     css: styles.css
 
 

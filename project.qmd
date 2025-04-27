@@ -1,65 +1,90 @@
 ---
-title: "Inflation of Food and Its Affect on Different Expenditure Groups in Turkey"
+title:  <span style="color:purple;">INFLATION OF FOOD AND ITS EFFECT ON DIFFERENT EXPENDITURE GROUPS IN TURKEY</span> 
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    code-copy: true
+    embed-resources: true
 ---
 
-Welcome to my project page.
+## <span style="color:darkgreen;">1. Project Overview and Scope</span> 
 
-Keep an eye on this space to stay updated with my project activities.
+Every country has an **inflation** which might be either positive or negative. It is stated that positive inflation points to a country's economic status regarding people's power to buy and maintain their lives. For the last few years, Turkey has been one of the countries that have suffered from high inflation. Moreover, inflation has been increasing day by day. The inflation word consists of many sub-categories some of which are food, cloth, education, and transportation consumer price index (CPI). This project mainly focuses on the ***CPI of food*** and its effect on various groups of ***people with different total expenditure levels***. To analyze the effect and infer, "Consumer price index (2003=100) according to main and sub-main groups, 2005-2025" and "Distribution of household consumption expenditure by quintiles ordered by expenditure, Türkiye, 2002-2023" data are driven from the website of TUIK, which is short for Turkey Statistics Institute.
 
-(The titles below are provided as examples; please feel free to adjust them as necessary.)
-
-# 1. Project Overview and Scope
-
-Every country has an inflation which might be either positive or negative. It is stated that positive inflation points a country's economical status in terms of people's power to buy and maintain their lives. For the last few years, Turkey is one of the countries which suffer from high inflation. Moreover, the inflation has been increasing day by day. The inflation word consists of many sub categories some of which are food, cloth, education, and transportation consumer price index (CPI). This project mainly focuses on the CPI of food and its affect on various groups of people with different total expenditure levels. Having done the analysis and comments, "Consumer price index (2003=100) according to main and sub-main groups, 2005-2025" and "Distribution of household consumption expenditure by quintiles ordered by expenditure, Türkiye, 2002-2023" data are driven from the website of TUIK, which is short for Turkey Statistics Institute.
-
-
-# 2. Data
+## <span style="color:darkgreen;">2. Data</span> 
 
 ```{r}
 #install.packages("readxl")
-#library(readxl)
-#consumer_price_index_data <- read_xlsx(path = "consumer_price_index_according_to_groups.xlsx")
-#comparison_of_consumption_types <- read_xlsx(path = #"comparison_of_consumption_types_according_to_expenditure.xlsx")
+library(readxl)
+consumer_price_index_data <- read_xlsx((path = "consumer_price_index_according_to_groups.xlsx"), .name_repair = "unique_quiet")
+comparison_of_consumption_types <- read_xlsx(path = "comparison_of_consumption_types_according_to_expenditure.xlsx")
 ```
 
-## 2.1 Data Source
 
-The data used for the analysis is driven from TUIK website. 
+### <span style="color:green;">2.1 General Information About Data</span>
 
-## 2.2 General Information About Data
+The data files used for in-depth analysis are driven from the TUIK website. The data named **"Distribution of household consumption expenditure by quintiles ordered by expenditure, Türkiye, 2002-2023"** consists of the distribution of consumption expenditure types of different expenditure groups. This data is also referred to as *"comparison_of_consumption_types"* and *"COCT data"* throughout the project. There are 5 groups in the columns named "First quantile", "Second quantile", "Third quantile", "Fourth quantile", and "Last quantile". Each represents 20% of the people who are subject of the data research in an ascending order of expenditure amount. Namely, the First quantile represents the %20 of the people who spend the least while the Last quantile represents the people who spend the most. There are different expenditure types for the years in the rows. However, there is no data from the years 2020 and 2021 even though the data is named by 2002-2023. Besides, there are two types of expenditure categorization for 2022 with a slight difference in splitting one type into two types. This update of categorization continues in 2023 as well. Consequently, there are 12 different expenditure types for the years from 2002 to 2022, excluding 2020 and 2021,  while there are 14 for the years 2022 and 2023. \
 
-The data named "Distribution of household consumption expenditure by quintiles ordered by expenditure, Türkiye, 2002-2023" consists of the distribution of consumption expenditure types of different expenditure groups. There are 5 groups in the columns named as "First quantile", "Second quantile", "Third quantile", "Fourth quantile", and "Last quantile". Each represents 20% of the people in an ascending order of expenditure amount. Namely, First quantile represents the %20 of the people who spend the least while Last quantile represents the people who spend the most. There are different expenditure types for the years in the rows. However there is not any data from the years 2020 and 2021 even though the data named by 2002-2023. Besides, there are two types of expenditure categorization for 2022 with a slight difference of splitting one type into to types. This update of categorization continues on 2023 as well. Consequently, there are 12 different expenditure types for the years from 2002 to 2022, excluding 2020 and 2021,  while there are 14 for years 2022 and 2023. \
+Another data used is named **"Consumer price index (2003=100) according to main and sub-main groups, 2005-2025"**, which is also referred to as *"consumer_price_index_data"* and *"CPI data"* throughout the project. This data shows the consumer price index value of 288 different main and sub-groups of expenditure according to each month of the years from 2005 to 2025. Year and month information is on the rows while the group names form the columns.  Only the columns directly related to food are considered as the scope of this project. \
 
-Another data used is named as "Consumer price index (2003=100) according to main and sub-main groups, 2005-2025". This data shows the index value of 288 different main and sub groups of expenditure according to each month of the years from 2005 to 2025. Year and month information is on the rows while the group names form the columns.  Only the columns directly related to food is considered as the scope of this project.
+In addition, the same years are considered to analyze the relation between CPI of food and its effect on different group of people with different levels of expenditure. Thus, the years between 2005-2023 for both of the data sets are selected as the interval of the project.
 
-## 2.3 Reason of Choice
+### <span style="color:green;">2.2 Reason of Choice</span>
 
-The inflation of a country tells a lot about economical status of it. It tells so many things that the food aspect of it might be underestimated. Nevertheless, to reach food has been one of the major concerns of a mankind. Over the decades, this concern has become more crucial for Turkish people, especially having low level of income and belong to the first and second quantile of expenditure level groups. The data chosen for this project helps us to understand which group of people spend what percentage of their money to food and how this rate changes according to the inflation and consumer index of food. The outcome of the analysis might shed light on the facts like a sign of socio-economial differences within the Turkish people. 
+The inflation of a country tells a lot about its economic status. It tells so many things that the food aspect of it might be underestimated. Nevertheless, reaching food has been one of the major concerns of mankind. Over the decades, this concern has become more crucial for Turkish people, especially having low levels of income and belonging to the first and second quantile of expenditure level groups. The data chosen for this project helps us to understand which group of people spend what percentage of their money on food and how this rate changes according to the inflation and consumer index of food. The conclusion of the project might shed light on the facts like a sign of socioeconomic differences within the Turkish people. It might also enable society to comprehend the situation of access to quality food according to different expenditure groups.
 
-## 2.4 Preprocessing
+### <span style="color:green;">2.3 Preprocessing</span>
 
-xxxxxx
+To begin with, the raw data which are in Excel (.xlsx) format driven from the website of TUIK are browsed as they are. Some of the rows and columns are deleted since they include texts providing information about the data. Later, Turkish headings are removed from each row and column in the files. After a few operations in the Excel format of the files, they become ready to be imported to R. Both data are also saved in RData format to be processed in R. \
 
-# 3. Analysis
+Having completed the format operations, it is observed that COCT data frame has 243 rows and 291 columns while CPI data frame has 275 row and 8 columns.
 
-xxxxxx
+```{r}
+save(consumer_price_index_data, file = "consumer_price_index_data.RData")
+save(comparison_of_consumption_types, file = "comparison_of_consumption_types.RData")
+load("consumer_price_index_data.RData")
+load("comparison_of_consumption_types.RData")
+```
 
-## 3.1 Exploratory Data Analysis
+```{r}
+nrow_CPI <- nrow(consumer_price_index_data)
+ncol_CPI <- ncol(consumer_price_index_data)
+nrow_COCT <- nrow(comparison_of_consumption_types)
+ncol_COCT <- ncol(comparison_of_consumption_types)
+summary_of_number_of_row_and_columns <- data.frame(
+data_set_name = c("consumer_price_index_data","comparison_of_consumption_types"),
+number_of_rows = c(nrow_CPI, nrow_COCT),
+number_of_column = c(ncol_CPI, ncol_COCT)
+)
+summary_of_number_of_row_and_columns
+#head(consumer_price_index_data)
+#head(comparison_of_consumption_types)
+```
 
-xxxxxx
+- For COCT data;\
+There is year and expenditure type information for each row. However, there will be another column mutated including year and expenditure type at the same time. There can be unique information column for each row thanks to this operation. The rows with total consumption expenditure information is planned to be removed since they only have 100%.\
+[Downloadable COCT Data in .RData version](https://github.com/emu-hacettepe-analytics/emu660-spring2025-ymyildiz)
 
-## 3.2 Trend Analysis
+- For CPI data;\
+There are too many columns as groups of expenditure some of which are not the topic of this project. These columns will be removed from the data. On the row side, there is year and month information. An additional row for each year will be mutated as the average value of the months of a year so that a relation with CPI data can be created. The change in the CPI of food will also be evaluated monthly for the years. Therefore, the month column and its relative rows will be kept for further analysis.\
+[Downloadable CPI Data in .RData version](https://github.com/emu-hacettepe-analytics/emu660-spring2025-ymyildiz)
 
-xxxxxx
+## <span style="color:darkgreen;">3. Analysis</span>
 
-## 3.3 Model Fitting
+The analysis part of the project will consist of of theThere will be plots mainly comparing the CPI of years and months within the years, and comparing food expenditure rates relative to the food CPI values.   
 
-xxxxxx
+### 3.1 Exploratory Data Analysis
 
-## 3.4 Results
 
-xxxxxx
+### 3.2 Trend Analysis
 
-# 4. Results and Key Takeaways
 
-xxxxxx
+### 3.3 Model Fitting
+
+
+### 3.4 Results
+
+
+## 4. Results and Key Takeaways
+
