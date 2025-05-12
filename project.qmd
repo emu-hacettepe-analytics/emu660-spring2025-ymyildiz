@@ -14,7 +14,7 @@ Every country has an **inflation** which might be either positive or negative. I
 
 ## <span style="color:darkgreen;">2. Data</span> 
 
-```{r}
+```{r, message=FALSE}
 #install.packages("readxl")
 library(readxl)
 library(dplyr)
@@ -36,7 +36,7 @@ The same years are considered to analyze the relation between CPI of food and it
 
 ### <span style="color:green;">2.2 Reason of Choice</span>
 
-The inflation of a country tells a lot about its economic status. It tells so many things that the food aspect of it might be underestimated. Nevertheless, reaching food has been one of the major concerns of mankind. Over the decades, this concern has become more crucial for Turkish people, especially having low levels of income and belonging to the first and second quantile of expenditure level groups. The data chosen for this project helps us to understand which group of people spend what percentage of their money on food and how this rate changes according to the inflation and consumer index of food. The conclusion of the project might shed light on the facts like a sign of socioeconomic differences within the Turkish people. It might also enable society to comprehend the situation of access to quality food according to different expenditure groups.
+The inflation of a country tells a lot about its economic status. It tells so many things that the food aspect of it might be underestimated. Nevertheless, reaching food has been one of the major concerns of mankind. Over the decades, this concern has become more crucial for Turkish people, especially having low levels of income and belonging to the first and second quantile of expenditure level groups. The data chosen for this project helps us to understand which group of people spend what percentage of their money on food and how this rate changes according to the inflation and consumer index of food. The conclusion of the project might shed light on the facts like a sign of socioeconomic differences among Turkish people. It might also enable society to comprehend the situation of access to quality food according to different expenditure groups.
 
 ### <span style="color:green;">2.3 Preprocessing</span>
 
@@ -61,21 +61,20 @@ data_set_name = c("consumer_price_index_data","comparison_of_consumption_types")
 number_of_rows = c(nrow_CPI, nrow_COCT),
 number_of_columns = c(ncol_CPI, ncol_COCT)
 )
-summary_of_number_of_row_and_columns
-#head(consumer_price_index_data)
-#head(comparison_of_consumption_types)
+knitr::kable(summary_of_number_of_row_and_columns, caption = "Table 1: Dimensions of the Unprocessed Data")
 ```
 
 [Downloadable COCT Data in .RData version](https://github.com/emu-hacettepe-analytics/emu660-spring2025-ymyildiz/raw/refs/heads/main/comparison_of_consumption_types.RData) \
 
 [Downloadable CPI Data in .RData version](https://github.com/emu-hacettepe-analytics/emu660-spring2025-ymyildiz/raw/refs/heads/main/consumer_price_index_data.RData) \
 
-- For COCT data;\
-In the data, columnn names include space (" ") which is not user-friendly in R. Therefore all the spaces is replaced by "_" sign. On the row side, it is observed that there are more value for some of the years in addition to the year information. For instance, year 2007 is represented as "2007(1)". The reason there are additional value like "(1)" or "(2)" for some of the years is that there is a note about the background of data gathered from those years with the same sign in the very below of the page, which is basically a footnote. In short, all the year value in the first row arranged so that all have only 4 digits. The rows with total consumption expenditure information is also removed since they only have 100% value. Moreover, only the rows having food and non-alcoholic beverages expenditure are kept. \ 
+#### <span style="color:green;">2.3.1 Comparison of Consumption Types (COCT) Data</span>
 
-As mentioned in the beginning of General Information About the Data chapter, there are two row belonging to year 2022 in the data at this point. 2 rows belonging to 2022 is reduced to one row by taking their average. This is the the most complex operation among the ones done in R so far. Finally, the class of Year column is turned into numeric from character.\
+In the data, columnn names include space (" ") which is not user-friendly in R. Therefore all the spaces is replaced by "_" sign. On the row side, it is observed that a few years are shown with an additional information for some of the years. For instance, year 2007 is represented as "2007(1)". The reason there are additional value like "(1)" or "(2)" for some of the years is that there is a note about the background of data gathered from those years with the same sign in the very below of the page, which is basically a footnote. In short, all the year value in the first row arranged so that all have only 4 digits. The rows with total consumption expenditure information is also removed since they only have 100% value. Moreover, only the rows having food and non-alcoholic beverages expenditure are kept. \ 
 
-The finak look of the data after the operations is as shown below:
+As mentioned in the beginning of General Information About the Data chapter, there are two rows belonging to year 2022 in the data at this point. 2 rows belonging to 2022 is reduced to one row by taking their average. This turned out to be the most complex operation among the ones done in R so far. Finally, the class of Year column is turned into numeric from character and only years between 2005-2023.\
+
+The final look of the data after the operations is as shown below:
 
 ```{r}
 comparison_of_consumption_types <- comparison_of_consumption_types %>% 
@@ -102,48 +101,59 @@ for (col in names(comparison_of_consumption_types)) { #creating a loop
     if (length(values) == 1) {
       new_row[[col]] <- values
     } else {
-      new_row[[col]] <- NA  # metinler uyuşmuyorsa NA yaz
+      new_row[[col]] <- NA
     }
   } else {
-    new_row[[col]] <- NA  # Diğer türler için istersen özelleştir
+    new_row[[col]] <- NA
   }
 }
 
 comparison_of_consumption_types_updated <- comparison_of_consumption_types[-rows_to_merge, ] #deleting the initial two 2022 rows
 
-# Yeni satırı sondan bir önceki sıraya ekle
 new_position <- nrow(comparison_of_consumption_types_updated)  # position of the generated row
 
+#rearranging the position of the generated row
 COCT_final <- bind_rows(
   comparison_of_consumption_types_updated[1:(new_position - 1), ],
   new_row,
   comparison_of_consumption_types_updated[new_position:nrow(comparison_of_consumption_types_updated), ]
 )
 
-#summary(COCT_final) #analysing the class of the columns
-COCT_final$Year <- as.numeric(COCT_final$Year)
-knitr::kable(COCT_final[, -2:-3], caption = "Table 1: Change of Food Expenditure Percentage According to Quintiles")
+COCT_final$Year <- as.numeric(COCT_final$Year) #changing the class of Year column to numeric
+
+COCT_final <- subset(COCT_final[, -2:-3], Year>=2005) #selecting the years starting from 2005
+
+knitr::kable(COCT_final, caption = "Table 2: Change of Food Expenditure Percentage According to Quintiles by Years")
 ```
 
-- For CPI data;\
-There are too many columns as groups of expenditure some of which are not the topic of this project. These columns will be removed from the data. However it is not that easy to obtain all the columns containing food information. After conducting an operation where the aim is selecting the columns containing "food" word, it is observed that there are columns named like "Fish and seafood" and "Other food products...". What we can deduce is that there might be much more columns than 6 which all contain "food" word. After a few try, the data appeared to have so many columns including food information like meat, chicken, bread etc. There is even a column for cereal. \
+#### <span style="color:green;">2.3.2 Consumer Price Index (CPI) Data</span>
 
-On the row side, there is year and month information. An additional row for each year will be mutated as the average value of the months of a year so that a relation with CPI data can be created. The change in the CPI of food will also be evaluated monthly for the years. Therefore, the month column and its relative rows will be kept for further analysis.\
+As an initial sense, there are too many columns as groups of expenditure some of which are not the topic of this project. These columns are removed from the data. However, it is not that easy to obtain all the columns containing food information. After conducting an operation where the aim is selecting the columns containing "food" word, it is observed that there are columns named like "Fish and seafood" and "Other food products...". What we can deduce is that there might be much more columns related to food than the ones containing "food" word. After a few try, the data appeared to have so many columns including food information like meat, chicken, bread etc. \
 
-```{r}
-#head(consumer_price_index_data)
-consumer_price_index_food <- consumer_price_index_data %>% select(contains("food"))
+On the row side, there is year and month information. An additional row for each year is mutated as the average value of the months of a year. Thanks to this operation, CPI value of food and how it changes can be evaluated not only by months but also by the years. The month column and its relative rows is kept for further analysis.\
 
-#Generating row containing average CPI value of a year
-yearly_averages <- consumer_price_index_data %>%
+The final look of the data after the operations is as shown below:
+
+```{r, warning=FALSE}
+#Generating rows containing average CPI value of each year
+consumer_price_index_yearly <- consumer_price_index_data %>%
   group_by(Year) %>%
   summarise(across(where(is.numeric), mean, na.rm = TRUE)) %>%
   mutate(Months = "Average") %>%
-  select(Year, Months, everything())
+  select(Year, Months, everything()) %>%
+  subset(Year<=2023)
+  
+#head(consumer_price_index_data)
 
-consumer_price_index_data <- bind_rows(consumer_price_index_data, yearly_averages)
+consumer_price_index_food <- consumer_price_index_yearly %>% select(Year | Months | General | contains("food")) #selecting the columns related to food
+
+COCT_final$Year <- as.numeric(COCT_final$Year)
+CPI_food_final <- consumer_price_index_food[, c(1,4)]
+CPI_food_final <- rename(CPI_food_final, "CPI_of_food"="Food and non-alcoholic beverages")
+
+knitr::kable(CPI_food_final, caption = "Table 3: Change of Food CPI by Years", align="l")
+#consumer_price_index_data <- bind_rows(consumer_price_index_data, consumer_price_index_yearly)
 ```
-
 
 ## <span style="color:darkgreen;">3. Analysis</span>
 
@@ -151,26 +161,62 @@ The analysis part of the project will consist of... There will be plots mainly c
 
 ### 3.1 Exploratory Data Analysis
 
-After intense preprocessing phase, is seems logical to look at the graphical reflection of the updated data. Initial plotting is done separately to have general understanding of what the data say. \
+After intense preprocessing phase, to look at the graphical reflection of the updated data isa good start for analysis. Initial plotting is done separately to have general understanding of what the data say. \
+
+```{r, warning=FALSE}
+COCT_long <- COCT_final %>%
+  pivot_longer(cols = -Year,
+               names_to = "category",
+               values_to = "value")
+
+ggplot(COCT_long, aes(x = Year, y = value, color = category, group = category)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  xlab("Year") +
+  ylab("Food Expenditure Percentage of Quintiles") +
+  ggtitle("Graph 1: Food Expenditure Percentage by Expenditure Groups Over the Years") +
+  theme_minimal()
+```
 
 As a general conjecture, people with the lowest income level naturally are the ones who spent the least. According to the initial observations people who spent very less spend at least one third of their money to food. 
 
 ```{r}
-COCT_final %>% ggplot(aes(Year)) + geom_line(aes(x=Year, y=First_quintile, col=1)) + geom_line(aes(x=Year, y=Second_quintile, col=2)) + geom_line(aes(x=Year, y=Third_quintile, col=3)) + geom_line(aes(x=Year, y=Fourth_quintile, col=4)) + geom_line(aes(x=Year, y=Last_quintile, col=5)) +
-  xlab("Year") +
-  ylab("Food Expenditure Percentage of Quintiles")
-```
-
-```{r}
-consumer_price_index_data %>% 
+consumer_price_index_food %>% 
   filter(Months=="Average") %>%
-  ggplot(aes(Year, `Food and non-alcoholic beverages`)) + geom_line() +
+  ggplot(aes(Year, `Food and non-alcoholic beverages`)) + geom_line(color="pink", linewidth=2) +
   xlab("Year") +
-  ylab("Food Consumer Price Index")
+  ylab("Food CPI") +
+  ggtitle("Change in Food CPI Over the Years") +
+  theme_minimal()
 ```
 
 
 ### 3.2 Trend Analysis
+```{r}
+merged_data <- left_join(COCT_final, CPI_food_final, by = "Year") #merging two processed data
+
+model_A <- lm(First_quintile ~ CPI_of_food, data = merged_data)
+summary(model_A)
+
+results <- lapply(names(merged_data)[2:6], function(grup) {
+  form <- as.formula(paste(grup, "~ CPI_of_food"))
+  model <- lm(form, data = merged_data)
+  summary(model)
+})
+names(results) <- names(merged_data)[2:6]
+
+diff(log(CPI_food_final$CPI_of_food))
+
+library(cluster)
+
+library(factoextra)
+k_data <- COCT_final %>% select(-Year)
+k_clusters <- kmeans(k_data, centers = 3)
+fviz_cluster(k_clusters, data = k_data)
+
+model_A <- lm(First_quintile ~ CPI_of_food, data = merged_data)
+predict(model_A, newdata = data.frame(CPI_of_food = 160))
+```
 
 
 ### 3.3 Model Fitting
