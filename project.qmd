@@ -70,7 +70,7 @@ knitr::kable(summary_of_number_of_row_and_columns, caption = "Table 1: Dimension
 
 #### <span style="color:green;">2.3.1 Comparison of Consumption Types (COCT) Data</span>
 
-In the data, columnn names include space (" ") which is not user-friendly in R. Therefore all the spaces is replaced by "_" sign. On the row side, it is observed that a few years are shown with an additional information for some of the years. For instance, year 2007 is represented as "2007(1)". The reason there are additional value like "(1)" or "(2)" for some of the years is that there is a note about the background of data gathered from those years with the same sign in the very below of the page, which is basically a footnote. In short, all the year value in the first row arranged so that all have only 4 digits. The rows with total consumption expenditure information is also removed since they only have 100% value. Moreover, only the rows having food and non-alcoholic beverages expenditure are kept. \ 
+In the data, column names include space (" ") which is not user-friendly in R. Therefore all the spaces is replaced by "_" sign. On the row side, it is observed that a few years are shown with an additional information for some of the years. For instance, year 2007 is represented as "2007(1)". The reason there are additional value like "(1)" or "(2)" for some of the years is that there is a note about the background of data gathered from those years with the same sign in the very below of the page, which is basically a footnote. In short, all the year value in the first row arranged so that all have only 4 digits. The rows with total consumption expenditure information is also removed since they only have 100% value. Moreover, only the rows having food and non-alcoholic beverages expenditure are kept. \ 
 
 As mentioned in the beginning of General Information About the Data chapter, there are two rows belonging to year 2022 in the data at this point. 2 rows belonging to 2022 is reduced to one row by taking their average. This turned out to be the most complex operation among the ones done in R so far. Finally, the class of Year column is turned into numeric from character and only years between 2005-2023.\
 
@@ -147,6 +147,8 @@ consumer_price_index_yearly <- consumer_price_index_data %>%
 
 consumer_price_index_food <- consumer_price_index_yearly %>% select(Year | Months | General | contains("food")) #selecting the columns related to food
 
+consumer_price_index_quality_food <- consumer_price_index_yearly %>% select(Year | Meat | Chicken | `Fish and seafood` | Bread | `Milk, cheese and eggs` | Fruit )
+
 COCT_final$Year <- as.numeric(COCT_final$Year)
 CPI_food_final <- consumer_price_index_food[, c(1,4)]
 CPI_food_final <- rename(CPI_food_final, "CPI_of_food"="Food and non-alcoholic beverages")
@@ -161,7 +163,13 @@ The analysis part of the project will consist of... There will be plots mainly c
 
 ### 3.1 Exploratory Data Analysis
 
-After intense preprocessing phase, to look at the graphical reflection of the updated data isa good start for analysis. Initial plotting is done separately to have general understanding of what the data say. \
+After the preprocessing phase, to look at the graphical reflection of the updated data is a good start for analysis. Initial plotting is done separately to have a general understanding of what the data say. \
+
+As a general conjecture, people with the lowest income level naturally are the ones who spent the least. It is pretty obvious that in Graph 1, the less people have money to spend less the more percent of their money is spent for food. People who spend very less spend at least one third of their money to food. This demonstrates that this part of society do not much have to spend more than the fundamentals like food and housing. Their major concern is to access food. \ 
+
+Another crucial point is as following. Food expenditure level has not been more than 15% of the total expenditure amount for the people belonging the last quintile. However, this much of expenditure might be so close to or even more than the other quintiles. This shows how spending trend changes by the total expenditure amount of people. \
+
+CPI of food doubles from 2010 to 2019. However, the percentage of money spent to food between 2010 and 2019 within the quintiles do not change dramatically. Namely, the percentage of food expenditure moves almost steady even though the total amount spent for food and almost everything else increases. This is the case for all the groups. 
 
 ```{r, warning=FALSE}
 COCT_long <- COCT_final %>%
@@ -178,51 +186,116 @@ ggplot(COCT_long, aes(x = Year, y = value, color = category, group = category)) 
   theme_minimal()
 ```
 
-As a general conjecture, people with the lowest income level naturally are the ones who spent the least. According to the initial observations people who spent very less spend at least one third of their money to food. 
 
 ```{r}
 consumer_price_index_food %>% 
   filter(Months=="Average") %>%
   ggplot(aes(Year, `Food and non-alcoholic beverages`)) + geom_line(color="pink", linewidth=2) +
   xlab("Year") +
-  ylab("Food CPI") +
-  ggtitle("Change in Food CPI Over the Years") +
+  ylab("CPI") +
+  ggtitle("Graph ... : Change in Food CPI Over the Years") +
   theme_minimal()
+
+df_long <- consumer_price_index_quality_food %>%
+  pivot_longer(cols = -Year, names_to = "Product", values_to = "CPI")
+
+ggplot(df_long, aes(x = Year, y = CPI, color = Product)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 2) +
+  scale_color_brewer(palette = "Set2") +
+  theme_minimal(base_size = 14) +
+  labs(
+    title = "Graph ... : Food CPI (2005-2023)",
+    subtitle = "Change in High Nutritious Food CPI in Years",
+    x = "Year",
+    y = "CPI",
+    color = "Food"
+  )
+
+ggplot(df_long, aes(x = Year, y = CPI)) +
+  geom_line(color = "steelblue", size = 1.2) +
+  geom_point(color = "steelblue", size = 2) +
+  facet_grid(~ Product, scales = "free_y") +
+  theme_minimal(base_size = 14) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(
+    title = "Graph ... : CPI of High Nutritious Food (2005-2023)",
+    x = "Year",
+    y = "CPI"
+  )
 ```
 
 
-### 3.2 Trend Analysis
+### 3.2 Multiple Linear Regression
+
+To analyze the effect of change in CPI of food, multiple linear regression (MLR) technique is used. The reason why MLR is prefered rather than linear regression is that there are different expenditure groups in this study and it is aimed to see the effect of CPI change on these groups seperately. \
+
+Two processed data are merged before starting the analysis. After investigating the output below, the value at the intercept of CPI_of_food and Estimate, which is 9.4, shows that people in the first quintile spend their money with more percentage as CPI increases. On the other hand, other values below 9.4 which are all negative are statistical evidence that other quintiles spend less percentage of their money to food. Different outputs also show that all quintile groups has different characteristics and react differently to change in CPI.  
+
+
 ```{r}
 merged_data <- left_join(COCT_final, CPI_food_final, by = "Year") #merging two processed data
 
-model_A <- lm(First_quintile ~ CPI_of_food, data = merged_data)
-summary(model_A)
+#Multiple Linear Regression
+df_long <- pivot_longer(merged_data, cols = starts_with("First"):starts_with("Last"),
+                        names_to = "Quintile", values_to = "Food_Spending")
 
-results <- lapply(names(merged_data)[2:6], function(grup) {
-  form <- as.formula(paste(grup, "~ CPI_of_food"))
-  model <- lm(form, data = merged_data)
-  summary(model)
-})
-names(results) <- names(merged_data)[2:6]
-
-diff(log(CPI_food_final$CPI_of_food))
-
-library(cluster)
-
-library(factoextra)
-k_data <- COCT_final %>% select(-Year)
-k_clusters <- kmeans(k_data, centers = 3)
-fviz_cluster(k_clusters, data = k_data)
-
-model_A <- lm(First_quintile ~ CPI_of_food, data = merged_data)
-predict(model_A, newdata = data.frame(CPI_of_food = 160))
+model_multi <- lm(Food_Spending ~ CPI_of_food + Quintile, data = df_long)
+summary(model_multi)
 ```
 
 
-### 3.3 Model Fitting
+### 3.3 Trend Analysis and Expenditure Percentage Prediction for CPI Scenarios
+
+```{r}
+
+ggplot(df_long, aes(x = CPI_of_food, y = Food_Spending, color = Quintile)) +
+  geom_point() + geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "CPI ve Gıda Harcama Oranı Arasındaki İlişki")
 
 
-### 3.4 Results
+model_A <- lm(First_quintile ~ CPI_of_food, data = merged_data) 
+predict(model_A, newdata = data.frame(CPI_of_food = 160))
+
+new_data <- data.frame(CPI_of_food = c(200, 220, 240))
+
+new_data$Predicted_Spending <- predict(model_multi, newdata = data.frame(
+  CPI_of_food = c(200, 220, 240),
+  Quintile = rep("First_quintile", 3)
+))
+```
+### 3.4 Elasticity Analysis
+After evaluating how food expenditure percentage changes by 1% increase in CPI of food, elasticity coefficient is around 0, slightly more or less. This tells that any expenditure group cannot respond since there is no substitution of food. First quintile seems the one who suffers the most from increse in CPI of food according to the results obtained so far. Nevertheless, **the respond** to the change is similar for different expenditure levels of groups in Turkey.
+
+
+```{r}
+df_merged <- merged_data %>%
+  mutate(log_CPI = log(CPI_of_food),
+         log_First = log(First_quintile),
+         log_Second = log(Second_quintile),
+         log_Third = log(Third_quintile),
+         log_Fourth = log(Fourth_quintile),
+         log_Last = log(Last_quintile))
+
+elasticity_model_first_quintile <- lm(log_First ~ log_CPI, data = df_merged)
+elasticity_model_second_quintile <- lm(log_Second ~ log_CPI, data = df_merged)
+elasticity_model_third_quintile <- lm(log_Third ~ log_CPI, data = df_merged)
+elasticity_model_fourth_quintile <- lm(log_Fourth ~ log_CPI, data = df_merged)
+elasticity_model_fifth_quintile <- lm(log_Last ~ log_CPI, data = df_merged)
+
+print("Elasticity of First Quintile")
+summary(elasticity_model_first_quintile)
+print("Elasticity of Second Quintile")
+summary(elasticity_model_second_quintile)
+print("Elasticity of Third Quintile")
+summary(elasticity_model_third_quintile)
+print("Elasticity of Fourth Quintile")
+summary(elasticity_model_fourth_quintile)
+print("Elasticity of Last Quintile")
+summary(elasticity_model_fifth_quintile)
+```
+
+### 3.5 Results
 
 
 ## 4. Results and Key Takeaways
