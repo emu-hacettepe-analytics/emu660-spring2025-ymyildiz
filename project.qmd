@@ -94,7 +94,7 @@ rows_to_merge <- c(19, 20) #the indexes of the rows with year 2022
 merged_rows <- comparison_of_consumption_types[rows_to_merge, ] #selecting year 2022 rows
 new_row <- comparison_of_consumption_types[1, ]  # starting to a new data frame
 
-for (col in names(comparison_of_consumption_types)) { #creating a loop 
+for (col in names(comparison_of_consumption_types)) { #creating a loop*
   if (is.numeric(comparison_of_consumption_types[[col]])) {
     new_row[[col]] <- mean(merged_rows[[col]], na.rm = TRUE)
   } else if (is.character(comparison_of_consumption_types[[col]]) || is.factor(comparison_of_consumption_types[[col]])) {
@@ -113,7 +113,7 @@ comparison_of_consumption_types_updated <- comparison_of_consumption_types[-rows
 
 new_position <- nrow(comparison_of_consumption_types_updated)  # position of the generated row
 
-#rearranging the position of the generated row
+#rearranging the position of the generated row*
 COCT_final <- bind_rows(
   comparison_of_consumption_types_updated[1:(new_position - 1), ],
   new_row,
@@ -212,7 +212,7 @@ The two processed datasets are merged before starting the analysis. After invest
 ```{r}
 merged_data <- left_join(COCT_final, CPI_food_final, by = "Year") #merging two processed data
 
-#Multiple Linear Regression
+#Multiple Linear Regression*
 df_long <- pivot_longer(merged_data, cols = starts_with("First"):starts_with("Last"),
                         names_to = "Quintile", values_to = "Food_Spending")
 
@@ -230,13 +230,13 @@ ggplot(df_long, aes(x = CPI_of_food, y = Food_Spending)) +
   geom_point(color = "blue", size = 2) +
   geom_smooth(method = "lm", color = "red", se = FALSE, size = 1) +
   facet_wrap(~ Quintile, ncol = 2) +
-  labs(title = "Graph 4: The Correlation Between Food Expenditure Percentage and Food CPI",
+  labs(title = "Graph 4: Food Expenditure Percentage and Food CPI Relation",
        x = "Food CPI", y = "Food Expenditure Percentage") +
   theme_bw()
 ```
 
 ```{r}
-df_long_2 <- df_long %>%
+df_long_2 <- df_long %>% 
   mutate(Spending_per_CPI = Food_Spending / CPI_of_food)
 
 ggplot(df_long_2, aes(x = Year, y = Spending_per_CPI, color = Quintile)) +
@@ -247,10 +247,10 @@ ggplot(df_long_2, aes(x = Year, y = Spending_per_CPI, color = Quintile)) +
 ```
 In addition, it can be observed that the ratio of food expenditure/food CPI ratio of quantiles gets closer to each other over the years according to Graph 5. What this means is that the decrease in the ratios points lower ability to purchase. Moreover, the first few quantiles have a much more dramatic decrease in their ratio. This is a sign of their more intense vulnerability against the rise of food CPI.\
 
-How food expenditure percentage changes by a 1% increase in CPI of food is a measure of the elasticity of the expenditure percentage. After conducting the analysis, it is observed that the groups have elasticity around 0, slightly more or less. This tells that any expenditure group cannot directly respond to the change of CPI since there is no substitution of food. Moreover, the first quintile seems to be the one that suffers the most from the increase in CPI of food, according to the results obtained so far. Nevertheless, the response to the change is similar for different expenditure levels of groups in Turkey.
+How food expenditure percentage changes by a 1% increase in CPI of food is a measure of the **elasticity of the expenditure groups**. After conducting the analysis, it is observed that the groups have elasticity around 0, slightly more or less. This tells that any expenditure group cannot directly respond to the change of CPI since there is no substitution of food. Moreover, the first quintile seems to be the one that suffers the most from the increase in CPI of food, according to the results obtained so far. Nevertheless, the response to the change is similar for different expenditure levels of groups in Turkey.
 
 ```{r}
-df_merged <- merged_data %>%
+df_merged <- merged_data %>% #*
   mutate(log_CPI = log(CPI_of_food),
          log_First = log(First_quintile),
          log_Second = log(Second_quintile),
@@ -280,7 +280,7 @@ cat("Food CPI Elasticity of Food Expenditure (Last_quintile):", round(elasticity
 
 To predict the future food expenditure percentages, regression analysis and the *predict* function of R are used. The CPI values for food are derived from the raw data, where rows from 2024 and 2025 were removed at the beginning of the project. According to these CPI values, the expenditure percentage for food is predicted for each quintile. The results are shown in Table 4.
 ```{r, warning=FALSE}
-#prediction models for each quintile according values of food CPI of 2024 and 2025 obtained from raw data
+#prediction models for each quintile according values of food CPI of 2024 and 2025 obtained from raw data*
 model_for_first <- lm(First_quintile ~ CPI_of_food, data = merged_data) 
 prediction_for_first_2024 <- predict(model_for_first, newdata = data.frame(CPI_of_food = 3364.88))
 prediction_for_first_2025 <- predict(model_for_first, newdata = data.frame(CPI_of_food = 4141.51))
@@ -326,14 +326,13 @@ ggplot(COCT_long_new_years, aes(x = Year, y = value, color = category, group = c
   geom_point(size = 2) +
   xlab("Year") +
   ylab("Food Expenditure Percentage of Quintiles") +
-  ggtitle("Graph 6: Food Expenditure Percentage by Expenditure Groups Over the Years with Prediction for 2024-2025") +
+  ggtitle("Graph 6: Food Expenditure Percentage by Expenditure Groups", subtitle = "Over the Years with Prediction for 2024-2025")+
   theme_minimal()
-
 ```
 
 
 ## <span style="color:darkgreen;">4. Results and Key Takeaways</span>
-This study tried to shed light on the food aspect of inflation's impact on people's expenditure attitudes with different expenditure levels. Two datasets are used for analysis, visualization, and inference.Not just high levels of inflation but also the concern about the effort to access food is one of the major and recent agendas in Turkey. It is not all about the numbers since inflation does not affect every person in the same way. However, it has a crucial impact on everyone.\ 
+Not just high levels of inflation but also the concern about the effort to access food is one of the major and recent agendas in Turkey. This study tries to shed light on the food aspect of inflation's impact on people's expenditure attitudes with different expenditure levels. Two datasets are used for analysis, visualization, and inference. It is not all about the numbers since inflation does not affect every person in the same way.\ 
 
 This study created the main key takeaways as listed in the following:
 
@@ -342,3 +341,5 @@ This study created the main key takeaways as listed in the following:
 - Any expenditure group cannot directly respond to the change in CPI since there is no substitution of food. Therefore, their food expenditure elasticity is very low. 
 
 Even though it is known that Turkey suffers from high consumer price index values and relatively high inflation rates, a deeper resolution of the impact should be investigated. The study aims to encourage the authorities to take a deep look at the impact on people's lives and take action accordingly. Isn't this what the government must do for the citizens after all?
+
+*ChatGPT was utilized for certain code blocks.
